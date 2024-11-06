@@ -13,3 +13,4 @@ module "ecs" {
   memory_1          = 512
   memory_2          = 256
 }
+

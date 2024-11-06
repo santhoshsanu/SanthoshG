@@ -4,6 +4,7 @@ variable "family" {
 
 variable "container_name_1" {
     type = string
+    default = ""
 }
 
 variable "container_name_2" {
@@ -44,6 +45,21 @@ variable "my_svc" {
 
 
 variable "desired_count" {
-    type = number
+    type = number 
+}
+
+variable "assign_public_ip" {
+    type = bool
+    default = false
+}
+
+variable "security_group_id" {
+    type = string
+    default = "sg-04226440229e90e52"
+}
+
+variable "subnet_id" {
+    type = string
+    default = "subnet-0bc593d3de0337225"
   
 }
