@@ -1,9 +1,46 @@
+# resource "aws_iam_role" "ecs_execution_role" {
+#   name = "ecs-execution-role"
+
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = "sts:AssumeRole"
+#         Principal = {
+#           Service = "ecs-tasks.amazonaws.com"
+#         }
+#         Effect = "Allow"
+#         Sid    = ""
+#       },
+#     ]
+#   })
+# }
+
+# # Attach the necessary policies to the execution role
+# resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
+#   role       = aws_iam_role.ecs_execution_role.name
+#   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"  # Allows ECS to pull from ECR
+# }
+
+# resource "aws_iam_role_policy_attachment" "cloudwatch_policy" {
+#   role       = aws_iam_role.ecs_execution_role.name
+#   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"  # Allows ECS to push logs to CloudWatch
+# }
+
+# resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy" {
+#   role       = aws_iam_role.ecs_execution_role.name
+#   policy_arn = "arn:aws:iam::aws:policy/AmazonECSTaskExecutionRolePolicy"  # Grants ECS task execution permissions
+# }
+
+
 resource "aws_ecs_task_definition" "task_def" {
     family = var.family
     requires_compatibilities = ["FARGATE"]
     network_mode             = "awsvpc"
     cpu                      = 1024
     memory                   = 2048
+    # task_role_arn = 
+    # execution_role_arn = aws_iam_role.ecs_execution_role.arn
     container_definitions = jsonencode([
         {
             name = var.container_name_1
@@ -70,17 +107,3 @@ resource "aws_ecs_service" "my_svc" {
 
 }
 
-
-module "ecs_task_execution_role" {
-  source = "dod-iac/ecs-task-execution-role/aws"
-
-  allow_create_log_groups    = true
-  cloudwatch_log_group_names = ["*"]
-  name = format("app-%s-task-execution-role-%s", var.application, var.environment)
-
-  tags  = {
-    Application = var.application
-    Environment = var.environment
-    Automation  = "Terraform"
-  }
-}
