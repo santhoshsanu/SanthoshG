@@ -62,8 +62,9 @@ read -n3 -p "do you want to continue? " reply
 
 `Explanation`
 
--n3: Reads only the first 3 characters of input.
--p "...": Prompts the user with the given text before accepting input.
+`-n3` Reads only the first 3 characters of input.
+`-p` Prompts the user with the given text before accepting input.
+`-z` flag in shell scripting is used  to check if a string is null or empty. 
 reply: Stores the input (up to 3 characters) in the variable reply.
 Input provided: yes
 
@@ -115,5 +116,9 @@ fi
 echo ${file_content} > ${abs_file_path}
 
 
+
+`Explaination`
+
+* `$#` : count of number of arguments passed
 
 ######################################################3
