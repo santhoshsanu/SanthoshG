@@ -21,6 +21,7 @@ exit 1
 ```
 
 
+
 `Explaination:`
 
 * The -f flag specifically checks for the existence of a regular file.

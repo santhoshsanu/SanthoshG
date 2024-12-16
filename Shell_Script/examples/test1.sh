@@ -68,7 +68,7 @@ read -n3 -p "do you want to continue? " reply
 reply: Stores the input (up to 3 characters) in the variable reply.
 Input provided: yes
 
-Only the first 3 characters (yes) are stored in reply.
+only the first 3 characters (yes) are stored in reply.
 
 
 
