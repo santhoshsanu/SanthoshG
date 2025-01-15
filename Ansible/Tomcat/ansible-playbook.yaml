@@ -16,9 +16,9 @@
   tasks:  
     - name: create a user
       ansible.builtin.user:
-        name: {{ username }}
-        home: {{ homedir }}
-        shell: {{ shell }}
+        name: "{{ username }}"
+        home: "{{ homedir }}"
+        shell: "{{ shell }}"
         state: present
 
 #   Install Java (Default JDK)
@@ -41,7 +41,7 @@
     - name: Unarchive a file with extra options
       ansible.builtin.unarchive:
         src: "/tmp/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
-        dest: {{ homedir }}
+        dest: "{{ homedir }}"
         extra_opts:
           - --strip-components=1
 
@@ -51,11 +51,11 @@
 
     - name: Set ownership for /opt/tomcat directory
       ansible.builtin.file:
-        path: {{ homedir }}
+        path: "{{ homedir }}"
         state: directory
         recurse: yes
-        owner: {{ username }}
-        group: {{ groupname }}
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
 
 #      Set Execute Permissions for Tomcat bin Directory
 
