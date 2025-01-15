@@ -25,7 +25,7 @@
     - name: update & install java default
       ansible.builtin.apt:
         update_cache: yes
-        name: default-jdk
+        name: openjdk-17-jdk
         state: present
 
 #    Download Tomcat Archive
