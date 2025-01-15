@@ -1,48 +1,48 @@
-Manuall Steps for INstalling Tomcat.
+Manuall Steps for Installing Tomcat.
 ------------------
 
-* create tomcat user and directory
+* Create the Tomcat User and Directory
 
 ```
 sudo useradd -m -d /opt/tomcat -U -s /bin/false tomcat
 ```
 
-* update & install packages
+* Update Packages and Install Java (JDK)
 
 ```
 sudo apt update && sudo apt install default-jdk -y
 ```
 
-* Change to temp dir & download tomcat packages
+* Download Tomcat Package
 
 ```
-cd /temp
+cd /tmp
 ```
 
 ```
 wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.13/bin/apache-tomcat-10.1.13.tar.gz
 ```
 
-* unzip tomcat files to /opt/tomcat
+*  Extract Tomcat Package to /opt/tomcat
 
 ```
 sudo tar xzvf apache-tomcat-10*tar.gz -C /opt/tomcat --strip-components=1
 ```
 
-* change owner&group as tomcat and provide execute permissions
+* Set Ownership and Permissions
 
 ```
 sudo chown -R tomcat:tomcat /opt/tomcat/
 sudo chmod -R u+x /opt/tomcat/bin
 ```
 
-* Create a Service file for Tomcat and add service file to it
+* Create a Systemd Service File for Tomcat
 
 ```
 sudo nano /etc/systemd/system/tomcat.service
 ```
 
-* Service File
+*  Add the Following Content to the Service File:
 
 ```
 [Unit]
@@ -72,13 +72,14 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-* demon restart
+*  Reload the Systemd Daemon
 
 ```
 sudo systemctl daemon-reload
 ```
 
-* start and enable tomcat service
+* Start and Enable Tomcat Service
+
 ```
 sudo systemctl start tomcat
 sudo systemctl status tomcat
