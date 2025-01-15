@@ -1,0 +1,14 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  tags:
+    - ansible
+  script:
+    # Ensure Ansible is installed
+
+    # Run the Ansible playbook using localhost inventory
+    - ansible-playbook -i hosts ansible.yaml
+  only:
+    - main

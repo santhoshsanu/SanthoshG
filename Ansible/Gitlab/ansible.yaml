@@ -1,0 +1,17 @@
+---
+- name: activity1
+  hosts: all
+  become: yes
+  tasks:
+    - name: install nginx
+      ansible.builtin.apt:
+        name:
+          - nginx
+        update_cache: true
+        state: present
+    - name: Verify Nginx Service Status
+      ansible.builtin.systemd_service:
+        name:
+          - nginx
+        state: started
+        enabled: yes
