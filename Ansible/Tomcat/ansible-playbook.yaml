@@ -15,9 +15,9 @@
   tasks:  
     - name: create a user
       ansible.builtin.user:
-        name: {{ username }}
-        home: {{ homedir }}
-        shell: {{ shell }}
+        name: "{{ username }}"
+        home: "{{ homedir }}"
+        shell: "{{ shell }}"
         state: present
 
 #   Install Java (Default JDK)
