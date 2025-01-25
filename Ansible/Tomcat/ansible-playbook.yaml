@@ -44,6 +44,7 @@
         dest: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
         extra_opts:
           - --strip-components=1
+        remote_src: yes
 
 
 #    creating symbolic lnk
