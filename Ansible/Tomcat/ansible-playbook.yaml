@@ -29,6 +29,13 @@
         name: "openjdk-{{ version }}-jdk"
         state: present
 
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
+        state: directory
+        mode: '0755'
+
 #    Download Tomcat Archive
 
     - name: Download file from a file path
