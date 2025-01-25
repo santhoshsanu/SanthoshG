@@ -34,13 +34,13 @@
     - name: Download file from a file path
       ansible.builtin.get_url:
         url: "https://dlcdn.apache.org/tomcat/tomcat-{{ tomcat_major_version }}/v{{ tomcat_specific_version }}/bin/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
-        dest: "/tmp/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
+        dest: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
 
 #      Unarchive Tomcat
 
     - name: Unarchive a file with extra options
       ansible.builtin.unarchive:
-        src: "/tmp/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
+        src: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
         dest: "{{ homedir }}"
         extra_opts:
           - --strip-components=1
@@ -50,7 +50,7 @@
 
     - name: Create a symbolic link
       ansible.builtin.file:
-        src: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
+        src: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
         dest: "{{ homedir }}/latest"
         owner: "{{ username }}"
         group: "{{ groupname }}"
