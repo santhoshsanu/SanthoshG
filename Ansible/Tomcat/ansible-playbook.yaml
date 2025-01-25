@@ -29,6 +29,7 @@
         name: "openjdk-{{ version }}-jdk"
         state: present
 
+#    Create a directory if it does not exist
 
     - name: Create a directory if it does not exist
       ansible.builtin.file:
@@ -66,6 +67,19 @@
         force: yes
 
 
+# Run the command and store the output in the variable 'shell_files'
+
+    - name: Return motd to registered var
+      ansible.builtin.command: sudo sh -c 'ls /opt/tomcat/latest/bin/*.sh'
+      register: shell_files
+
+
+# Print the output of the 'shell_files' variable
+
+    - name: print the value
+      debug: 
+      var: shell_files
+    
 #      Set Permissions and Ownership    
 
 
