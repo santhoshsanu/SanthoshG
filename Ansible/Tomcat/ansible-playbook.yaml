@@ -74,11 +74,12 @@
       register: shell_files
 
 
-# Print the output of the 'shell_files' variable
+# Print   shell files and set permissions
 
-    - name: print the value
-      ansible.builtin.debug: 
-        msg: "{{ item }}"     
+    - name: Print the value and set permissions for shell files
+      ansible.builtin.file:
+        path: "{{ item }}"
+        mode: "0751"    
       loop: "{{ shell_files.stdout_lines }}"
     
 #      Set Permissions and Ownership    
