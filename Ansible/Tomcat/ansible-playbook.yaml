@@ -77,7 +77,7 @@
 # Print the output of the 'shell_files' variable
 
     - name: print the value
-      debug: 
+      ansible.builtin.debug: 
       var: shell_files
     
 #      Set Permissions and Ownership    
