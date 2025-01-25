@@ -46,6 +46,17 @@
           - --strip-components=1
 
 
+#    creating symbolic lnk
+
+    - name: Create a symbolic link
+      ansible.builtin.file:
+        src: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
+        dest: "{{ homedir }}/latest"
+        owner: "{{ username }}"
+        group: "{{ groupname }}"
+        state: link
+
+
 #      Set Permissions and Ownership    
 
 
