@@ -69,7 +69,7 @@
 
 # Run the command and store the output in the variable 'shell_files'
 
-    - name: Return motd to registered var
+    - name: get all the shell files
       ansible.builtin.command: sudo sh -c 'ls /opt/tomcat/latest/bin/*.sh'
       register: shell_files
 
@@ -78,7 +78,8 @@
 
     - name: print the value
       ansible.builtin.debug: 
-        var: shell_files
+        msg: "{{ item }}"     
+      loop: "{{ shell_files.stdout_lines }}"
     
 #      Set Permissions and Ownership    
 
