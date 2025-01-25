@@ -41,7 +41,7 @@
     - name: Unarchive a file with extra options
       ansible.builtin.unarchive:
         src: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}.tar.gz"
-        dest: "{{ homedir }}/apache-tomcat-{{ tomcat_specific_version }}"
+        dest: "{{ homedir }}/"
         extra_opts:
           - --strip-components=1
         remote_src: yes
