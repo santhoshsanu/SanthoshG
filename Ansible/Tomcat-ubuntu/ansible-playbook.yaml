@@ -28,6 +28,7 @@
         update_cache: yes
         name: "openjdk-{{ version }}-jdk"
         state: present
+      when: ansible_facts['os_family'] == "Debian"
 
 #    Create a directory if it does not exist
 
