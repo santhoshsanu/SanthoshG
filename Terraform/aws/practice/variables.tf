@@ -13,3 +13,8 @@ variable "subnet-names" {
   type    = list(string)
   default = ["yellow", "orange", "red"]
 }
+
+variable "business_cidr" {
+  type = string
+  
+}

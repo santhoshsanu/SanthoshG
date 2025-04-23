@@ -21,7 +21,7 @@ resource "aws_subnet" "subnets" {
 
 resource "aws_subnet" "business" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = var.business-cidr
+  cidr_block = var.business_cidr
 
   tags = {
     Name = "business"
