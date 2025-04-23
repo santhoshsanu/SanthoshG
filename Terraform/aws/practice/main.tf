@@ -7,20 +7,13 @@ resource "aws_vpc" "main" {
 
 }
 
-resource "aws_subnet" "data" {
+resource "aws_subnet" "subnets" {
+  count      = length(var.subnet-names)
   vpc_id     = aws_vpc.main.id
-  cidr_block = var.data-cidr
+  cidr_block = "10.0.${count.index}.0/24"
+
 
   tags = {
-    Name = "data"
-  }
-}
-
-resource "aws_subnet" "business" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = var.business-cidr
-
-  tags = {
-    Name = "business"
+    Name = "subnet ${count.index}"
   }
 }
