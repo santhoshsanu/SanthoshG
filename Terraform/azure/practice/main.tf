@@ -1,38 +1,50 @@
-provider "azurerm" {
-  features {}
-
-  subscription_id = "6a6a9c10-f82a-4e15-bf31-"
-}
-
 resource "azurerm_resource_group" "main" {
-    name = "example-tf"
-    location = "East US"
+  name     = var.resource_group_name
+  location = var.location
 }
 
 resource "azurerm_virtual_network" "primary" {
-  name = "primary-network"
-  location = azurerm_resource_group.main.location
+  name                = "${var.resource_group_name}-network"
+  location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  address_space = ["10.0.0.0/16"]
+  address_space       = [var.address_space]
 
-  depends_on = [ azurerm_resource_group.main ]
+  depends_on = [azurerm_resource_group.main]
 }
 
 
-resource "azurerm_subnet" "web" {
-  name = "web-subnet"
-  resource_group_name = azurerm_resource_group.main.name
+resource "azurerm_subnet" "subnets" {
+  count                = length(var.subnet-names)
+  name                 = var.subnet-names[count.index]
+  resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.primary.name
-  address_prefixes = ["10.0.1.0/24"]
+  address_prefixes     = [cidrsubnet(var.address_space, 8, count.index)]
 
-  depends_on = [ azurerm_virtual_network.primary ]
+  depends_on = [azurerm_virtual_network.primary]
 }
 
-resource "azurerm_subnet" "data" {
-  name = "data-subnet"
-  resource_group_name = azurerm_resource_group.main.name
-  virtual_network_name = azurerm_virtual_network.primary.name
-  address_prefixes = ["10.0.2.0/24"]
 
-  depends_on = [ azurerm_virtual_network.primary ]
+resource "azurerm_network_security_group" "nsg" {
+  name                = "${var.resource_group_name}-nsg"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+
+}
+
+
+resource "azurerm_network_security_rule" "nsg_rule" {
+  count                       = length(var.nsg_rule)
+  name                        = var.nsg_rule[count.index].name
+  priority                    = var.nsg_rule[count.index].priority
+  direction                   = var.nsg_rule[count.index].direction
+  access                      = var.nsg_rule[count.index].access
+  protocol                    = var.nsg_rule[count.index].protocol
+  source_port_range           = var.nsg_rule[count.index].source_port_range
+  destination_port_range      = var.nsg_rule[count.index].destination_port_range
+  source_address_prefix       = var.nsg_rule[count.index].source_address_prefix
+  destination_address_prefix  = var.nsg_rule[count.index].destination_address_prefix
+  resource_group_name         = azurerm_resource_group.main.name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+
+  depends_on = [azurerm_network_security_group.nsg]
 }

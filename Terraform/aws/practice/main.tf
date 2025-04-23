@@ -17,3 +17,15 @@ resource "aws_subnet" "subnets" {
     Name = "subnet ${count.index}"
   }
 }
+
+
+resource "aws_subnet" "business" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = var.business-cidr
+
+  tags = {
+    Name = "business"
+  }
+}
+
+
