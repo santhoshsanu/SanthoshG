@@ -95,3 +95,51 @@ spec:
     requests:
       storage: 5Gi
 ```
+
+
+
+```sh
+aws eks create-addon --cluster-name managed-cluster --addon-name aws-efs-csi-driver \
+  --service-account-role-arn $EFS_CSI_ADDON_ROLE
+aws eks wait addon-active --cluster-name managed-cluster --addon-name aws-efs-csi-driver
+```
+
+
+
+# efs-pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: efs-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-0ef8c38a2223c0e78  # <- Just the EFS FileSystem ID (NO access point)
+
+
+
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: efs-demo-pod
+spec:
+  containers:
+  - name: efs-demo-container
+    image: nginx  # Replace with your application container image
+    volumeMounts:
+    - mountPath: /mnt/efs  # The path inside the container where the volume will be mounted
+      name: efs-storage
+  volumes:
+  - name: efs-storage
+    persistentVolumeClaim:
+      claimName: efs-pvc
