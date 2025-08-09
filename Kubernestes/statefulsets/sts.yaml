@@ -35,6 +35,6 @@ spec:
         resources:
           requests:
             storage: 2Gi
-        storageClassName: managed-csi
+        storageClassName: standard
         accessModes:
           - ReadWriteOnce
