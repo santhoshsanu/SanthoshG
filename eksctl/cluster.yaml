@@ -1,0 +1,16 @@
+# cluster.yaml
+# A cluster with two managed nodegroups
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: managed-cluster
+  region: us-east-1
+
+managedNodeGroups:
+  - name: managed-ng-1
+    minSize: 1
+    maxSize: 2
+    desiredCapacity: 1
+    volumeSize: 20
