@@ -86,3 +86,39 @@ Build Triggers define **when a Jenkins job starts automatically**.
 | **Poll SCM** | Periodically checks the Git repository and triggers a build only if changes are detected. |
 | **Trigger builds remotely** | Allows external systems or scripts to trigger the job using an API URL and security token. |
 
+# GitHub Webhook Configuration for Jenkins
+
+## Step 1: Configure Jenkins
+
+Open your Jenkins job:
+
+**Configure → Build Triggers**
+
+Enable:
+
+- ✅ **GitHub hook trigger for GITScm polling**
+
+---
+
+## Step 2: Configure GitHub Webhook
+
+Go to your GitHub repository:
+
+**Settings → Webhooks → Add webhook**
+
+Configure the following:
+
+| Field | Value |
+|-------|-------|
+| **Payload URL** | `http://<JENKINS-IP>:8080/github-webhook/` |
+| **Content type** | `application/json` |
+| **Secret** | Leave empty (optional) |
+| **Events** | Just the **push** event |
+| **Active** | ✅ Enabled |
+
+---
+
+## Interview Answer
+
+> A GitHub Webhook automatically notifies Jenkins whenever code is pushed to a repository. In Jenkins, we enable the **GitHub hook trigger for GITScm polling**, and in GitHub we configure a webhook with the Jenkins URL (`http://<JENKINS-IP>:8080/github-webhook/`). After every `git push`, GitHub sends an HTTP POST request to Jenkins, which immediately starts the pipeline.
+
