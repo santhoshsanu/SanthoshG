@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Test Slack') {
+            steps {
+                echo 'Testing Slack notification...'
+            }
+        }
+    }
+
+    post {
+        success {
+            slackSend(
+                channel: '#all-testing',
+                message: 'Hello! Jenkins Slack integration is working successfully.'
+            )
+        }
+
+        failure {
+            slackSend(
+                channel: '#all-testing',
+                message: 'Jenkins Slack integration test failed.'
+            )
+        }
+    }
+}
+
+
+I first create a Slack App in the Slack workspace. Then I enable a Bot User, assign the required OAuth permissions such as chat:write, 
+and install the app to the workspace. This generates a Bot User OAuth Token (xoxb-...). I store this token securely in Jenkins Credentials as a Secret Text 
+credential instead of hardcoding it. After that, I configure the Slack Notification Plugin in Jenkins by selecting the workspace, the stored credential, and the
+ default Slack channel. Finally, I test the connection and use the slackSend step in the Jenkins pipeline to send build success or failure notifications.
