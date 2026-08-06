@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: game-demo-pod
+spec:
+  containers:
+  - name: nginx
+    image: alpine
+    command: ["sleep", "3600"]
+    envFrom:
+    - configMapRef:
+        name: game-demo
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  DB_HOST: database.example.com
+  PORT: "5432"
