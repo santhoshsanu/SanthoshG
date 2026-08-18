@@ -9,7 +9,7 @@ variable "vpc_id" {
 }
 
 variable "subnet_id" {
-  description = "Subnet ID where EC2 will be created"
+  description = "Subnet ID wher EC2 will be created"
   type        = string
 }
 
