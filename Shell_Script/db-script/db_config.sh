@@ -1,0 +1,5 @@
+DB_HOST="databa.com"
+DB_PORT="3306"
+DB_USER="admin"
+DB_PASSWORD="Pd*"
+MY_SQL="/mnt/c/tools/mysql/current/bin/mysql.exe"
